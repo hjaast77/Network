@@ -16,12 +16,12 @@ def index(request):
         likes = post.likes.count()
         posts.append((post, likes))
 
-    paginator = Paginator(posts, 2) # Show 3 posts per page.
+    paginator = Paginator(posts, 10) # Show 10 posts per page.
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, "network/index.html", {"posts": posts, 'page_obj': page_obj})
+    return render(request, "network/index.html", {'page_obj': page_obj})
 
 def create(request):
     if request.method =="POST":
@@ -105,7 +105,12 @@ def profile(request, user_id):
         likes = post.likes.count()
         posts.append((post, likes))
 
-    return render(request, "network/profile.html", {"posts": posts, "profile_user": profile_user, "following": following_count, "followed": followers_count, "isFollowing": is_following})
+    paginator = Paginator(posts, 2) # Show 10 posts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)    
+
+    return render(request, "network/profile.html", {"page_obj":  page_obj, "profile_user": profile_user, "following": following_count, "followed": followers_count, "isFollowing": is_following})
 
 def follow_user(request, user_id):
     userToFollow = get_object_or_404(User, id=user_id)
@@ -134,4 +139,9 @@ def following(request):
         likes = post.likes.count()
         posts.append((post, likes))
 
-    return render(request, "network/following.html", {"posts": posts})
+    paginator = Paginator(posts, 2) # Show 10 posts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "network/following.html", {"page_obj": page_obj})

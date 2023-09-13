@@ -5,3 +5,31 @@
 #newPost{
     margin-left: 10px;
 }
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+body{
+	font-family: 'Roboto', sans-serif;
+}
+
+.card {
+    margin: auto;
+    width: 50%;
+}
+.card-header{
+    padding: 0;
+    height: 1 rem;
+    margin-left: 0;
+}
+
+.card-body{
+    padding: 4px;
+}
+
+.card-body p {
+    font-size: 1 rem;
+}
+
+.card-body footer{
+    font-size: 12px;
+}

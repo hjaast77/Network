@@ -39,7 +39,7 @@
 {% endif %}
 
     
-{% for posts, likes in posts %}
+{% for posts, likes in page_obj %}
 
 <div class="card">
     <div class="card-header">
@@ -58,5 +58,37 @@
 {% empty %}
     <div>No Posts yet!</div>
 {% endfor %}
+
+<nav aria-label="Page navigation example">
+  {% if page_obj.paginator.num_pages > 1 %}
+    <ul class="pagination justify-content-center pagination-sm">
+      {% if page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page=1">&laquo;&laquo;</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+      {% endif %}
+  
+      {% for i in page_obj.paginator.page_range %}
+        {% if i == page_obj.number %}
+          <li class="page-item active">
+            <span class="page-link">{{ i }}</span>
+          </li>
+        {% elif i > page_obj.number|add:"-3" and i < page_obj.number|add:"3" %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+          </li>
+        {% endif %}
+      {% endfor %}
+  
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;&raquo;</a>
+        </li>
+      {% endif %}
+    </ul>
+  {% endif %}
+  </nav>
 
 {% endblock %}
